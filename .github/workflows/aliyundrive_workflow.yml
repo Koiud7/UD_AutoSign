@@ -24,6 +24,9 @@ jobs:
     - name: Install requests module
       run: pip install requests
 
+    - name: Install pytz
+      run: pip install pytz
+
     - name: Run aliyundrive script
       env:
          #aliyundrive
