@@ -11,7 +11,7 @@ def main():
         email = i.split('&')[0]
         passwd = i.split('&')[1]
         result = sign_in(email, passwd)
-        send_to_telegram(result)
+        send_to_telegram(email, result)  # 传递 email 给 send_to_telegram
         r += 1
 
 def sign_in(email, passwd):
@@ -40,14 +40,14 @@ def ql_env():
         print("未添加IKUUU_ACCOUNTS变量")
         sys.exit(0)
 
-def send_to_telegram(message):
+def send_to_telegram(email, message):  # 接收 email 和 message 参数
     if "TELEGRAM_BOT_TOKEN" in os.environ and "TELEGRAM_CHAT_ID" in os.environ:
         bot_token = os.environ["TELEGRAM_BOT_TOKEN"]
         chat_id = os.environ["TELEGRAM_CHAT_ID"]
         url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
         data = {
             "chat_id": chat_id,
-            "text": email+":"+message,
+            "text": f"{email}: {message}",  # 使用传递的 email 和 message 构建消息
         }
         response = requests.post(url, json=data)
         if response.status_code == 200:
