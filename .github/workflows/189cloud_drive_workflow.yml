@@ -3,6 +3,7 @@ name: Run ikuuu
 on:
   push:
     branches:
+      - main
       - '189_cloud_drive/**'
   watch:
     types: started
