@@ -1,0 +1,38 @@
+name: Run ikuuu
+
+on:
+  push:
+    branches:
+      - main
+  watch:
+    types: started
+  schedule:
+    - cron: 30 19 * * *
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install requests module
+      run: pip install requests
+
+    - name: Run ikuuu script
+      env:
+        IKUUU_ACCOUNTS: ${{ secrets.IKUUU_ACCOUNTS }}
+      run: python ikuuuu_account.py.py
+
+    - name: Send results to Telegram Bot
+      env:
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: |
+        result=$(cat result.txt)  # Modify this to match where your result is stored
+        curl -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" -d "chat_id=${TELEGRAM_CHAT_ID}" -d "text=${result}"
