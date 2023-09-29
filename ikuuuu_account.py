@@ -8,7 +8,6 @@ def main():
     print("共找到" + str(len(oy)) + "个账号")
     for i in oy:
         print("------------正在执行第" + str(r) + "个账号----------------")
-        print(IKUUU_ACCOUNTS)
         email = i.split('&')[0]
         passwd = i.split('&')[1]
         result = sign_in(email, passwd)
