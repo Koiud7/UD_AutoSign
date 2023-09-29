@@ -24,8 +24,12 @@ jobs:
     - name: Install requests module
       run: pip install requests
 
-    - name: Install pytz
+    - name: Install pytz&tenacity
       run: pip install pytz
+
+    - name: Install tenacity
+      run: pip install tenacity
+            
 
     - name: Run aliyundrive script
       env:
