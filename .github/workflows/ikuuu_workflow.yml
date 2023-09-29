@@ -1,9 +1,10 @@
 name: Run ikuuu
 
 on:
-  # push:
-  #   branches:
-  #     - main/ikuuu
+  push:
+    branches:
+      - main
+      - 'ikuuu/**'
   watch:
     types: started
   schedule:
