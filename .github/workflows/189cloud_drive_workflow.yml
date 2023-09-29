@@ -28,8 +28,7 @@ jobs:
         pip3 install -r 189_cloud_drive/requirements.txt
         
     - name: Run Cloud189 script
-      run: |
-        # cloud189_user='${{ secrets.CLOUD189_USER }}'
-        # cloud189_pwd='${{ secrets.CLOUD189_PWD }}'
-        python3 189_cloud_drive/checkin.py --username '${{ secrets.CLOUD189_USER }}' --password '${{ secrets.CLOUD189_PWD }}'
-        done
+      env:
+        CLOUD189_USER= ${{ secrets.CLOUD189_USER }}
+        CLOUD189_PWD= ${{ secrets.CLOUD189_PWD }}
+      run: python 189_cloud_drive/checkin.py 
