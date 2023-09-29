@@ -3,7 +3,6 @@ name: Run ikuuu
 on:
   push:
     branches:
-      - main
       - 'ikuuu/**'
   watch:
     types: started
