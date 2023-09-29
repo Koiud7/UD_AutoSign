@@ -3,12 +3,9 @@ import requests
 import os
 
 def main():
-    print(TELEGRAM_BOT_TOKEN)
-    print(TELEGRAM_CHAT_ID)
-    print(email)
-    print(password)
     r = 1
     oy = ql_env()
+    print(IKUUU_ACCOUNTS)
     print("共找到" + str(len(oy)) + "个账号")
     for i in oy:
         print("------------正在执行第" + str(r) + "个账号----------------")
