@@ -27,20 +27,20 @@ jobs:
         
     - name: Checkin
       run: |
-        user='${{ secrets.USER }}'
-        pwd='${{ secrets.PWD }}'
+        cloud189_user='${{ secrets.CLOUD189_USER }}'
+        cloud189_pwd='${{ secrets.CLOUD189_PWD }}'
         
         user_list=()
         pwd_list=()
 
         IFS=","
 
-        for u in ${user[*]}
+        for u in ${cloud189_user[*]}
         do
         user_list[${#user_list[*]}]=${u}
         done
 
-        for p in ${pwd[*]}
+        for p in ${cloud189_pwd[*]}
         do
         pwd_list[${#pwd_list[*]}]=${p}
         done
