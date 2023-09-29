@@ -36,9 +36,10 @@ class CheckIn(object):
         response = self.client.get(self.sign_url % rand, headers=headers)
         net_disk_bonus = response.json()["netdiskBonus"]
         if response.json()["isSign"] == "false":
-            print(f"未签到，签到获得{net_disk_bonus}M空间")
+            message_first = f"未签到，签到获得{net_disk_bonus}M空间"
+            
         else:
-            print(f"已经签到过了，签到获得{net_disk_bonus}M空间")
+            message_first = f"已经签到过了，签到获得{net_disk_bonus}M空间"
         headers = {
             "User-Agent": "Mozilla/5.0 (Linux; Android 5.1.1; SM-G930K Build/NRD90M; wv) "
                           "AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0"
@@ -51,17 +52,20 @@ class CheckIn(object):
         }
         response = self.client.get(url, headers=headers)
         if "errorCode" in response.text:
-            print(response.text)
+            message_next=response.text
         else:
             description = (response.json() or {}).get("description")
-            print(f"抽奖获得{description}")
+            message_next = f"抽奖获得{description}"
         response = self.client.get(url2, headers=headers)
         if "errorCode" in response.text:
-            print(response.text)
+             message_next=response.text
         else:
             description = (response.json() or {}).get("description")
-            print(f"抽奖获得{description}")
-
+            message_next = f"抽奖获得{description}"
+        message_all=message_frist+'\n'+message_next
+        send_to_telegram(message_all)
+        print(message_all)
+        
     @staticmethod
     def rsa_encode(rsa_key, string):
         rsa_key = f"-----BEGIN PUBLIC KEY-----\n{rsa_key}\n-----END PUBLIC KEY-----"
@@ -135,12 +139,31 @@ def b64_to_hex(a):
     if e == 1:
         d += _chr(c << 2)
     return d
+    
+def send_to_telegram(message_all):  # 接收 email 和 message 参数
+    if "TELEGRAM_BOT_TOKEN" in os.environ and "TELEGRAM_CHAT_ID" in os.environ:
+        bot_token = os.environ["TELEGRAM_BOT_TOKEN"]
+        chat_id = os.environ["TELEGRAM_CHAT_ID"]
+        url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+        data = {
+            "chat_id": chat_id,
+            "text": f" {message_all}",
+        }
+        response = requests.post(url, json=data)
+        if response.status_code == 200:
+            print("Telegram 消息发送成功")
+        else:
+            print("Telegram 消息发送失败")
+    else:
+        print("未配置 TELEGRAM_BOT_TOKEN 和 TELEGRAM_CHAT_ID")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='天翼云签到脚本')
-    parser.add_argument('--username', type=str, help='账号')
-    parser.add_argument('--password', type=str, help='密码')
-    args = parser.parse_args()
-    helper = CheckIn(args.username, args.password)
+    username = os.environ["CLOUD189_USER"]
+    password = os.environ["CLOUD189_PWD"]
+    # parser.add_argument('--username', type=str, help='账号')
+    # parser.add_argument('--password', type=str, help='密码')
+    # args = parser.parse_args()
+    helper = CheckIn(username, password)    
     helper.check_in()
