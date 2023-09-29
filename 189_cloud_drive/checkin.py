@@ -160,10 +160,8 @@ def send_to_telegram(message_all):  # 接收 email 和 message 参数
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='天翼云签到脚本')
-    username = os.environ["CLOUD189_USER"]
-    password = os.environ["CLOUD189_PWD"]
-    # parser.add_argument('--username', type=str, help='账号')
-    # parser.add_argument('--password', type=str, help='密码')
-    # args = parser.parse_args()
-    helper = CheckIn(username, password)    
+    parser.add_argument('--CLOUD189_USER', type=str, help='账号')
+    parser.add_argument('--CLOUD189_PWD', type=str, help='密码')
+    args = parser.parse_args()
+    helper = CheckIn(CLOUD189_USER, CLOUD189_PWD)    
     helper.check_in()
