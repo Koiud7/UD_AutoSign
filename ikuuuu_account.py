@@ -55,6 +55,10 @@ def send_to_telegram(message):
         else:
             print("Telegram 消息发送失败")
     else:
+        print(TELEGRAM_BOT_TOKEN)
+        print(TELEGRAM_CHAT_ID)
+        print(email)
+        print(password)
         print("未配置 TELEGRAM_BOT_TOKEN 和 TELEGRAM_CHAT_ID")
 
 if __name__ == '__main__':
