@@ -1,9 +1,9 @@
 name: Run aliyundrive
 
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   watch:
     types: started
   schedule:
