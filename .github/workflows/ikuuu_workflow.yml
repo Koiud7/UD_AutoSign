@@ -27,7 +27,7 @@ jobs:
     - name: Run ikuuu script
       env:
         IKUUU_ACCOUNTS: ${{ secrets.IKUUU_ACCOUNTS }}
-      run: python ikuuuu_account.py.py
+      run: python ikuuuu_account.py
 
     - name: Send results to Telegram Bot
       env:
