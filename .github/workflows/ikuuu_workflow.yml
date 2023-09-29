@@ -28,11 +28,3 @@ jobs:
       env:
         IKUUU_ACCOUNTS: ${{ secrets.IKUUU_ACCOUNTS }}
       run: python ikuuuu_account.py
-
-    - name: Send results to Telegram Bot
-      env:
-        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-      run: |
-        result=$(cat result.txt)  # Modify this to match where your result is stored
-        curl -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" -d "chat_id=${TELEGRAM_CHAT_ID}" -d "text=${result}"
