@@ -1,8 +1,7 @@
 import sys
 import requests
 import os
-# export ikuuu='邮箱&密码'      多号#号隔开
-# os.environ['ikuuu'] = "melolohappy@gmail.com&why123456#3094687642@qq.com&check233"
+
 def main():
     r = 1
     oy = ql_env()
