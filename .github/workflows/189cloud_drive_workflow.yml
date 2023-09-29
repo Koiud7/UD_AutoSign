@@ -27,8 +27,38 @@ jobs:
       run: |
         pip3 install -r 189_cloud_drive/requirements.txt
         
+
     - name: Run Cloud189 script
-      env:
-        CLOUD189_USER= ${{ secrets.CLOUD189_USER }}
-        CLOUD189_PWD= ${{ secrets.CLOUD189_PWD }}
-      run: python 189_cloud_drive/checkin.py 
+      run: |
+        CLOUD189_USER='${{ secrets.CLOUD189_USER }}'
+        CLOUD189_PWD='${{ secrets.CLOUD189_PWD }}'
+        
+        user_list=()
+        pwd_list=()
+
+        IFS=","
+
+        for u in ${CLOUD189_USER[*]}
+        do
+        user_list[${#user_list[*]}]=${u}
+        done
+
+        for p in ${CLOUD189_PWD[*]}
+        do
+        pwd_list[${#pwd_list[*]}]=${p}
+        done
+
+        user_num=${#user_list[*]}
+        pwd_num=${#pwd_list[*]}
+
+        if [ $user_num != $pwd_num ];then
+        echo "账号和密码个数不对应"
+        exit 1
+        else
+        echo "共有 $user_num 个账号，即将开始签到"
+        fi
+
+        for ((i=0;i<$user_num;i++))
+        do
+        python3 189_cloud_drive/checkin.py  --username ${user_list[$i]} --password ${pwd_list[$i]}
+        done
