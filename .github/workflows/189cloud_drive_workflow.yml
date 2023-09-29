@@ -1,12 +1,13 @@
-name: Cloud189Checkin
+name: Run ikuuu
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches:
+      - '189_cloud_drive/**'
+  watch:
+    types: started
   schedule:
-    - cron: 0 2,14 * * *
+    - cron: 35 18 * * *
 
 jobs:
   check-in:
