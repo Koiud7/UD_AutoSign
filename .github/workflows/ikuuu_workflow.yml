@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    environment: adrien
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -26,5 +26,9 @@ jobs:
 
     - name: Run ikuuu script
       env:
+         #ikuuu
         IKUUU_ACCOUNTS: ${{ secrets.IKUUU_ACCOUNTS }}
+         # Telegram
+        TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
+        TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}
       run: python ikuuuu_account.py
