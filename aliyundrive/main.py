@@ -6,8 +6,8 @@ from aliyundrive import Aliyundrive
 
 
 def main():
-    # token = os.environ["ALIYUNDRIVE_TOKEN"]
-    token = '2792ce9415fb40688986cd055b5e69ed'
+    token = os.environ["ALIYUNDRIVE_TOKEN"]
+    
     ali = Aliyundrive()
     message_all = []
 
