@@ -39,6 +39,5 @@ def send_to_telegram(message_all):  # 接收 email 和 message 参数
     else:
         print("未配置 TELEGRAM_BOT_TOKEN 和 TELEGRAM_CHAT_ID")
 
-
 if __name__ == '__main__':
     main()
