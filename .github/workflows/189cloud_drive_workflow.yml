@@ -1,65 +1,50 @@
 name: Run 189cloud
-
 on:
   push:
     branches:
       - main
     paths:
-      - '189_cloud_drive/*.py'
+      - '189_cloud_drive/*.*'
   watch:
     types: started
   schedule:
-    - cron: 35 19 * * *
-
+    - cron: 25 19 * * *
 jobs:
-  cloud189-check-in:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    environment: adrien
-
+    environment: user
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Install Python
+    - uses: actions/checkout@v3
+      with:
+        path: cloud189  # 指定要将代码检出到的子文件夹 "cloud189"
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v3
+      with:
+        node-version: 14
+    - name: init
       run: |
-        sudo apt update && \
-        sudo apt install python3
-      
-    - name: requirements
-      run: |
-        pip3 install -r 189_cloud_drive/requirements.txt
-        
-
-    - name: Run Cloud189 script
-      run: |
-        user='${{ secrets.CLOUD189_USER }}'
-        pwd='${{ secrets.CLOUD189_PWD }}'
-        
-        user_list=()
-        pwd_list=()
-
-        IFS=","
-
-        for u in ${user[*]}
-        do
-        user_list[${#user_list[*]}]=${u}
-        done
-
-        for p in ${pwd[*]}
-        do
-        pwd_list[${#pwd_list[*]}]=${p}
-        done
-
-        user_num=${#user_list[*]}
-        pwd_num=${#pwd_list[*]}
-
-        if [ $user_num != $pwd_num ];then
-        echo "账号和密码个数不对应"
-        exit 1
-        else
-        echo "共有 $user_num 个账号，即将开始签到"
-        fi
-
-        for ((i=0;i<$user_num;i++))
-        do
-        python3 189_cloud_drive/checkin.py --username ${user_list[$i]} --password ${pwd_list[$i]}
-        done
+        cd cloud189  # 进入子文件夹 "cloud189"
+        npm install  # 在子文件夹中安装依赖项
+    - name: run
+      id: run
+      uses: nick-fields/retry@v2
+      env:
+        TY_USER_NAME: ${{secrets.TY_USER_NAME}}
+        TY_PASSWORD: ${{secrets.TY_PASSWORD}}
+        TY_USER_NAME1: ${{secrets.TY_USER_NAME1}}
+        TY_PASSWORD1: ${{secrets.TY_PASSWORD1}}
+        TY_USER_NAME2: ${{secrets.TY_USER_NAME2}}
+        TY_PASSWORD2: ${{secrets.TY_PASSWORD2}}
+        TY_USER_NAM3: ${{secrets.TY_USER_NAM3}}
+        TY_PASSWORD3: ${{secrets.TY_PASSWORD3}}
+        TY_USER_NAME4: ${{secrets.TY_USER_NAME4}}
+        TY_PASSWORD4: ${{secrets.TY_PASSWORD4}}
+        # Server
+        SENDKEY: ${{secrets.SENDKEY}}
+        # Telegram
+        TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
+        TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}
+      with:
+        timeout_minutes: 10
+        max_attempts: 3
+        command: npm start
