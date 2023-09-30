@@ -3,7 +3,7 @@ name: Run ikuuu
 on:
   push:
     paths:
-      - 'ikuuu/**'
+      - 'ikuuu/**.py'
   watch:
     types: started
   schedule:
