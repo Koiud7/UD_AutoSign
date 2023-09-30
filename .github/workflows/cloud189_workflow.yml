@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        path: /cloud189  # 指定要将代码检出到的子文件夹 "cloud189"
+        path: ./cloud189  # 指定要将代码检出到的子文件夹 "cloud189"
     - name: Setup Node.js environment
       uses: actions/setup-node@v3
       with:
