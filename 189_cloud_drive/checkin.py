@@ -157,7 +157,6 @@ def send_to_telegram(message_all):  # 接收 email 和 message 参数
     else:
         print("未配置 TELEGRAM_BOT_TOKEN 和 TELEGRAM_CHAT_ID")
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='天翼云签到脚本')
     parser.add_argument('--username', type=str, help='账号')
