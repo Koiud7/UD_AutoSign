@@ -1,15 +1,11 @@
 # -*- coding:utf-8 -*-
-import os
-import requests
-import hashlib
-import time
 import copy
+import hashlib
 import logging
+import os
 import random
-
-import smtplib
-from email.mime.text import MIMEText
-
+import time
+import requests
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -94,7 +90,7 @@ def get_favorite(bduss):
     returnData = res
     if 'forum_list' not in returnData:
         returnData['forum_list'] = []
-    if res['forum_list'] == []:
+    if not res['forum_list']:
         return {'gconforum': [], 'non-gconforum': []}
     if 'non-gconforum' not in returnData['forum_list']:
         returnData['forum_list']['non-gconforum'] = []
@@ -203,12 +199,11 @@ def send_to_telegram(sign_list):  # 接收 email 和 message 参数
                 </div>
                 <hr>
                 """
-        body_all=subject+'\n'+body
-        msg = MIMEText(body_all, 'html', 'utf-8')
-
+        body_all = subject + '\n' + body
+ 
         data = {
             "chat_id": chat_id,
-            "text": f" {msg}",
+            "text": f" {body_all}",
         }
         response = requests.post(url, json=data)
         if response.status_code == 200:
@@ -218,8 +213,9 @@ def send_to_telegram(sign_list):  # 接收 email 和 message 参数
     else:
         print("未配置 TELEGRAM_BOT_TOKEN 和 TELEGRAM_CHAT_ID")
 
+
 def main():
-    if ('BDUSS' not in ENV):
+    if 'BDUSS' not in ENV:
         logger.error("未配置BDUSS")
         return
     b = ENV['BDUSS'].split('#')
@@ -228,7 +224,7 @@ def main():
         tbs = get_tbs(i)
         favorites = get_favorite(i)
         for j in favorites:
-            time.sleep(random.randint(1,5))
+            time.sleep(random.randint(1, 5))
             client_sign(i, tbs, j["id"], j["name"])
         logger.info("完成第" + str(n) + "个用户签到")
     send_to_telegram(favorites)
