@@ -177,9 +177,9 @@ def send_to_telegram(sign_list):
         url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
 
         length = len(sign_list)
-        beijing_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time() + 28800))
-        title="百度贴吧自动签到完成"+'\n'+'\n'+f"{beijing_time}+" - "+{length}个百度贴吧已完成签到"+'\n'
-        
+        beijing_time:str = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time() + 28800))
+        title = "百度贴吧--自动签到完成" + '\n' + '\n' +"时间:"+beijing_time + '\n' + "用户:melolohappy"+ '\n'+"任务:"+ str(length) + "个贴吧已签到" + '\n'
+
         data = {
             "chat_id": chat_id,
             "text": f" {title}",
