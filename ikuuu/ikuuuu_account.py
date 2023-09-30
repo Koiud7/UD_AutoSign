@@ -47,7 +47,7 @@ def send_to_telegram(email, message):  # 接收 email 和 message 参数
         url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
         data = {
             "chat_id": chat_id,
-            "text": f"🚀 ikuuu账号:  {email} \n{message}",
+            "text": f"🚀 ikuuu账号:  \n{email} \n{message}",
         }
         response = requests.post(url, json=data)
         if response.status_code == 200:
