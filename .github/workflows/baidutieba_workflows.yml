@@ -4,12 +4,17 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'baidutieba/*.py'
+  watch:
+    types: started
   schedule:
-    - cron: '5 16,22 * * *'
+    - cron: 35 19 * * *
 
 jobs:
-  tieba_sign:
+  build:
     runs-on: ubuntu-latest
+    environment: adrien
     steps:
       - name: 'Checkout codes'
         uses: actions/checkout@v2
@@ -22,8 +27,4 @@ jobs:
       - name: 'Start Sign'
         env:
           BDUSS: ${{ secrets.BDUSS }}
-          HOST: ${{ secrets.HOST }}
-          FROM: ${{ secrets.FROM }}
-          TO: ${{ secrets.TO }}
-          AUTH: ${{ secrets.AUTH }}
         run: python main.py
