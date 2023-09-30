@@ -9,7 +9,7 @@ on:
   watch:
     types: started
   schedule:
-    - cron: 30 19 * * *
+    - cron: 35 19 * * *
 
 jobs:
   cloud189-check-in:
