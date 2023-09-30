@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-      - 'checkin_adrien/cloud189/*.*'  # 指定正确的文件路径
+      - 'cloud189/*.*'  # 指定正确的文件路径
   watch:
     types: started
   schedule:
@@ -20,7 +20,7 @@ jobs:
       with:
         node-version: 14
     - name: Change Working Directory
-      run: cd checkin_adrien/cloud189  # 进入正确的目录
+      run: cd ./cloud189  # 进入正确的目录
     - name: init
       run: npm install
     - name: run
