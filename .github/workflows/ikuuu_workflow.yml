@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - main
-      - 'ikuuu/**'
+    paths:
+      - 'ikuuuu_account.py'
   watch:
     types: started
   schedule:
