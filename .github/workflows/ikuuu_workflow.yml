@@ -2,8 +2,8 @@ name: Run ikuuu
 
 on:
   push:
-    branches:
-      - 'ikuuu/**'
+    paths:
+      - 'ikuuu/ikuuu_account.py'
   watch:
     types: started
   schedule:
