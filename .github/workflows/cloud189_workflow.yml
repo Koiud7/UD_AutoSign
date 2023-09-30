@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-      - 'cloud189/*.*'
+      - 'checkin_adrien/cloud189/*.*'  # 指定正确的文件路径
   watch:
     types: started
   schedule:
@@ -15,14 +15,12 @@ jobs:
     environment: adrien
     steps:
     - uses: actions/checkout@v3
-      with:
-        path: ./cloud189  # 指定要将代码检出到的子文件夹 "cloud189"
     - name: Setup Node.js environment
       uses: actions/setup-node@v3
       with:
         node-version: 14
     - name: Change Working Directory
-      run: cd cloud189
+      run: cd checkin_adrien/cloud189  # 进入正确的目录
     - name: init
       run: npm install
     - name: run
