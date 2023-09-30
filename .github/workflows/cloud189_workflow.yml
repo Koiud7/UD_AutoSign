@@ -20,7 +20,7 @@ jobs:
       with:
         node-version: 14
     - name: Change Working Directory
-      run: cd ./cloud189  # 进入正确的目录
+      run: cd cloud189  # 进入 "cloud189" 子文件夹
     - name: init
       run: npm install
     - name: run
