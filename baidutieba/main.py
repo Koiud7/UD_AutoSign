@@ -170,40 +170,19 @@ def client_sign(bduss, tbs, fid, kw):
     return res
 
 
-def send_to_telegram(sign_list):  # 接收 email 和 message 参数
+def send_to_telegram(sign_list):
     if "TELEGRAM_BOT_TOKEN" in os.environ and "TELEGRAM_CHAT_ID" in os.environ:
         bot_token = os.environ["TELEGRAM_BOT_TOKEN"]
         chat_id = os.environ["TELEGRAM_CHAT_ID"]
         url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
 
         length = len(sign_list)
-        subject = f"{time.strftime('%Y-%m-%d', time.localtime())} 签到{length}个贴吧"
-
-        body = """
-            <style>
-            .child {
-              background-color: rgba(173, 216, 230, 0.19);
-              padding: 10px;
-            }
-
-            .child * {
-              margin: 5px;
-            }
-            </style>
-            """
-        for i in sign_list:
-            body += f"""
-                <div class="child">
-                    <div class="name"> 贴吧名称: {i['name']}</div>
-                    <div class="slogan"> 贴吧简介: {i['slogan']}</div>
-                </div>
-                <hr>
-                """
-        body_all = subject + '\n' + body
- 
+        beijing_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time() + 28800))
+        title="百度贴吧自动签到完成"+'\n'+'\n'+f"{beijing_time}+" - "+{length}个百度贴吧已完成签到"+'\n'
+        
         data = {
             "chat_id": chat_id,
-            "text": f" {body_all}",
+            "text": f" {title}",
         }
         response = requests.post(url, json=data)
         if response.status_code == 200:
