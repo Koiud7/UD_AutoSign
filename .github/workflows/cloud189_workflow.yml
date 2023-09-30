@@ -21,10 +21,10 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 14
+    - name: Change Working Directory
+      run: cd cloud189
     - name: init
-      run: |
-        cd cloud189  # 进入子文件夹 "cloud189"
-        npm install  # 在子文件夹中安装依赖项
+      run: npm install
     - name: run
       id: run
       uses: nick-fields/retry@v2
