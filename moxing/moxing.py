@@ -37,6 +37,7 @@ def get_captcha(driver):
     with open('result.png', 'rb') as image_file:
         img_bytes = image_file.read()
     result = ocr.classification(img_bytes)
+    print(result)
     return result
 
 
@@ -172,8 +173,8 @@ if __name__ == "__main__":
         driver = webdriver.Chrome(options=options)
 
         driver.get("https://moxing.love/member.php?mod=logging&action=login")
-        # 设置页面缩放级别为80%
-        driver.execute_script("document.body.style.zoom='80%'")
+        # 设置页面缩放级别为100%
+        driver.execute_script("document.body.style.zoom='100%'")
         login_success = login(driver)
 
         if login_success:
