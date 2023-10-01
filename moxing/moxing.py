@@ -23,9 +23,9 @@ def get_captcha(driver):
     # 保存验证码图片
     captcha_image.save('result.png')
 
-     # 发送验证码图片到Telegram
-    send_image_to_telegram('result.png')
-    send_image_to_telegram( 'pic.png')
+    #  # 发送验证码图片到Telegram
+    # send_image_to_telegram('result.png')
+    # send_image_to_telegram( 'pic.png')
     # 初始化 DDDDORC 实例
     ocr = ddddocr.DdddOcr()
 
@@ -129,7 +129,7 @@ def sign_in(driver):
     total_need = total_need_element.text
     total_need = total_need.split("您升级到此用户组还需积分")[1].strip()
 
-    message = f"moxing论坛: {sign_flag}\n\n连续签到天数: {lianxudays}\n签到软妹币: {rmb}\n软妹币总数: {total_rmb}\n——————————————————\n当前头衔: {touxian}\n总积分: {total_jifen}\n升级剩余积分 {total_need}"
+    message = f"😈moxing论坛: {sign_flag}\n\n签到软妹币:  {rmb}\n软妹币总数:  {total_rmb}\n连续签到天数:  {lianxudays}\n——————————————————\n当前头衔:  {touxian}\n总积分:  {total_jifen}\n升级剩余积分  {total_need}"
 
 
 def close_browser(driver):
@@ -153,21 +153,21 @@ def send_to_telegram(msg):  # 接收 email 和 message 参数
     else:
         print("未配置 TELEGRAM_BOT_TOKEN 和 TELEGRAM_CHAT_ID")
 
-def send_image_to_telegram(image_path):
-    token = os.environ["TELEGRAM_BOT_TOKEN"]
-    chat_id = os.environ["TELEGRAM_CHAT_ID"]
-    url = f"https://api.telegram.org/bot{token}/sendPhoto"
-    files = {'photo': open(image_path, 'rb')}
-    data = {'chat_id': chat_id}
-    response = requests.post(url, data=data, files=files)
-    return response
+# def send_image_to_telegram(image_path):
+#     token = os.environ["TELEGRAM_BOT_TOKEN"]
+#     chat_id = os.environ["TELEGRAM_CHAT_ID"]
+#     url = f"https://api.telegram.org/bot{token}/sendPhoto"
+#     files = {'photo': open(image_path, 'rb')}
+#     data = {'chat_id': chat_id}
+#     response = requests.post(url, data=data, files=files)
+#     return response
 
 if __name__ == "__main__":
     username = os.environ["MOXING_USERNAME"]
     password = os.environ["MOXING_PSW"]
     img_path = os.path.join(os.getcwd(), "1.png")
 
-    max_attempts = 1  # 设置最大执行次数
+    max_attempts = 5  # 设置最大执行次数
     attempts = 0  # 初始化计数器
     while attempts < max_attempts:
         # 初始化WebDriver并设置窗口大小
