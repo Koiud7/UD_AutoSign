@@ -18,7 +18,6 @@ def get_captcha(driver):
     driver.save_screenshot('pic.png')
     pic = Image.open('pic.png')
     captcha_element = driver.find_element(By.XPATH, "//img[@width='120']")
-
     location = captcha_element.location
     size = captcha_element.size
     left = location['x']
