@@ -35,7 +35,7 @@ def get_captcha(driver):
     with open('result.png', 'rb') as image_file:
         img_bytes = image_file.read()
     result = ocr.classification(img_bytes)
-    print(result)
+    print("验证码为:"+result)
     return result
 
 
@@ -162,13 +162,13 @@ if __name__ == "__main__":
     password = os.environ["MOXING_PSW"]
     img_path = os.path.join(os.getcwd(), "1.png")
 
-    max_attempts = 5  # 设置最大执行次数
+    max_attempts = 3  # 设置最大执行次数
     attempts = 0  # 初始化计数器
     while attempts < max_attempts:
         # 初始化WebDriver并设置窗口大小
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--no-sandbox')
-        chrome_options.add_argument('--headless')
+        # chrome_options.add_argument('--headless')
         chrome_options.add_argument('--disable-dev-shm-usage')
         chrome_options.add_argument("--start-maximized")  # 最大化窗口
         driver = webdriver.Chrome(options=chrome_options)
