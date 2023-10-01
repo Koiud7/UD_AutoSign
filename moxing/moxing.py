@@ -22,16 +22,16 @@ def get_captcha(driver):
     captcha_image = pic.crop(captcha_region)
     # 保存验证码图片
     captcha_image.save('result.png')
+    send_image_to_telegram(captcha_image)
+
     
     # 初始化 DDDDORC 实例
     ocr = ddddocr.DdddOcr()
-
     # 识别验证码图片中的字符
     with open('result.png', 'rb') as image_file:
         img_bytes = image_file.read()
     result = ocr.classification(img_bytes)
     return result
-
 
 def login(driver):
     try:
