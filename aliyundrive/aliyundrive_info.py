@@ -17,9 +17,7 @@ class AliyundriveInfo:
     def __str__(self) -> str:
         message_all = ''
         if self.success:
-            message_all = f'🧸阿里云盘自动签到完成\n' \
-                           '                                 \n'\
-                          f'用户：{self.user_name}\n' \
+            message_all = f'用户：{self.user_name}\n' \
                           f'签到：本月已签到{self.signin_count}次\n' \
                           f'奖励：{self.reward_notice}\n' \
                           f'任务：{self.task_notice}'
