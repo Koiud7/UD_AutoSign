@@ -140,6 +140,7 @@ def send_to_telegram(msg):
         data = {
             "chat_id": chat_id,
             "text": msg,
+            "parse_mode": "Markdown",
         }
         response = requests.post(url, json=data)
         if response.status_code == 200:
