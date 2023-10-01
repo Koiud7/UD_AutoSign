@@ -14,19 +14,14 @@ def save_img(src, img_path):
         f.write(img.content)
 
 def get_captcha(driver):
-    # 截取验证码图片
     driver.save_screenshot('pic.png')
     pic = Image.open('pic.png')
-    captcha_element = driver.find_element(By.XPATH, "//img[@width='120']")
-    location = captcha_element.location
-    size = captcha_element.size
-    left = location['x']
-    top = location['y']
-    right = left + size['width']
-    bottom = top + size['height']
-
-    image = pic.crop((left, top, right, bottom))
-    image.save('result.png')
+    # 确定验证码的位置和大小
+    captcha_region = (400, 530, 510, 580)  # 替换x、y、width、height为实际值
+    # 根据确定的位置和大小截取验证码
+    captcha_image = pic.crop(captcha_region)
+    # 保存验证码图片
+    captcha_image.save('result.png')
 
      # 发送验证码图片到Telegram
     send_image_to_telegram('result.png')
@@ -179,6 +174,7 @@ if __name__ == "__main__":
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--headless')
+        chrome_options.add_argument("--window-size=1200,960")
         chrome_options.add_argument('--disable-dev-shm-usage')
         # chrome_options.add_argument("--start-maximized")  # 最大化窗口
         driver = webdriver.Chrome(options=chrome_options)
