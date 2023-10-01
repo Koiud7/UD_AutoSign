@@ -13,9 +13,8 @@ def main():
 
     result = ali.aliyundrive_check_in(token)
     message_all.append(str(result))
-
-    title = '阿里云盘签到结果'
-    formatted_message = f'*🧸[阿里云盘] 签到完成*\n\n```\n{message_all}\n```"
+    text=message_all
+    formatted_message = f'*🧸[阿里云盘] 签到完成*\n\n```\n{text}\n```"
     send_to_telegram(formatted_message)
 
 
