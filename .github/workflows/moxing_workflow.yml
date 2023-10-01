@@ -33,7 +33,12 @@ jobs:
 
     - name: Prepare chromedriver
       uses: nanasess/setup-chromedriver@v2
-        
+
+    - name: Install xvfb
+      run: sudo apt-get install xvfb
+    - name: Start xvfb
+      run: xvfb-run --server-args="-screen 0 1920x1080x24" python moxing/moxing.py      
+      
     - name: Run moxing script
       env:
          #moxing
