@@ -45,12 +45,13 @@ def send_to_telegram(messages):
     if "TELEGRAM_BOT_TOKEN" in os.environ and "TELEGRAM_CHAT_ID" in os.environ:
         bot_token = os.environ["TELEGRAM_BOT_TOKEN"]
         chat_id = os.environ["TELEGRAM_CHAT_ID"]
-        text = "\n——————————————————\n".join(messages)  # Join the messages with separator
+        text = "\n—————————————————\n".join(messages)  # Join the messages with separator
         formatted_message = f"🚀 ikuuu自动签到完成\n\n{text}"
         url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
         data = {
             "chat_id": chat_id,
             "text": formatted_message,
+            "parse_mode": "HTML",
         }
         response = requests.post(url, json=data)
         if response.status_code == 200:
