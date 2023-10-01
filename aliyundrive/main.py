@@ -13,9 +13,13 @@ def main():
 
     result = ali.aliyundrive_check_in(token)
     message_all.append(str(result))
-    text=message_all
-    formatted_message = f'*🧸[阿里云盘] 签到完成*\n\n```\n{text}\n```"
-    send_to_telegram(formatted_message)
+
+    title = '阿里云盘签到结果'
+    message_all = '\n'.join(message_all)
+    message_all = re.sub('\n+', '\n', message_all).rstrip('\n')
+
+    send_to_telegram(message_all)
+    print(message_all)
 
 
 def send_to_telegram(message_all):  # 接收 email 和 message 参数
@@ -23,9 +27,10 @@ def send_to_telegram(message_all):  # 接收 email 和 message 参数
         bot_token = os.environ["TELEGRAM_BOT_TOKEN"]
         chat_id = os.environ["TELEGRAM_CHAT_ID"]
         url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+        formatted_message = f"*🧸[阿里云盘] 签到完成*\n\n```\n{message_all}\n```"
         data = {
             "chat_id": chat_id,
-            "text": message_all,
+            "text": formatted_message,
             "parse_mode": "Markdown",
         }
         response = requests.post(url, json=data)
