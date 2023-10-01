@@ -177,14 +177,11 @@ def send_to_telegram(sign_list):
 
         length = len(sign_list)
         beijing_time:str = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time() + 28800))
-        title = "**🥳百度贴吧自动签到完成**"
-
-        # 使用三个反引号包裹其他内容，并指定语言为Markdown
-        code_block = f"```\n时间:  {beijing_time}\n—————————————————\n用户:  melolohappy\n任务:  {length} 个贴吧已签到\n```"
-
+        text="时间:  {beijing_time}\n—————————————————\n用户:  melolohappy\n任务:  {length} 个贴吧已签到\n"
+        formatted_message = f"*🥳百度贴吧自动签到完成*\n\n```\n{text}\n```"
         data = {
             "chat_id": chat_id,
-            "text": f"{title}\n{code_block}",
+            "text": formatted_message,
             "parse_mode": "Markdown",
         }
         response = requests.post(url, json=data)
