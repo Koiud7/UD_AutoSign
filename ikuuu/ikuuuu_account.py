@@ -47,7 +47,7 @@ def send_to_telegram(messages):
         bot_token = os.environ["TELEGRAM_BOT_TOKEN"]
         chat_id = os.environ["TELEGRAM_CHAT_ID"]
         text = "\n—————————————————\n".join(messages)  # Join the messages with separator
-        formatted_message = f"🚀 ikuuu自动签到完成\n\n{html.escape(text)}"  # 转义文本以防止链接
+        formatted_message = f"🚀 ikuuu自动签到完成\n\n<pre>{text}</pre>"  # 使用<pre>标签包裹文本
         url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
         data = {
             "chat_id": chat_id,
@@ -61,6 +61,7 @@ def send_to_telegram(messages):
             print("Telegram 消息发送失败")
     else:
         print("未配置 TELEGRAM_BOT_TOKEN 和 TELEGRAM_CHAT_ID")
+
 
 if __name__ == '__main__':
     main()
