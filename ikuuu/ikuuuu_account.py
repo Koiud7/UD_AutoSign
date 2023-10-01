@@ -1,7 +1,7 @@
 import sys
 import requests
 import os
-import html
+
 
 def main():
     r = 1
