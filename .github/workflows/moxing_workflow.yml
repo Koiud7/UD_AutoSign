@@ -34,11 +34,6 @@ jobs:
     - name: Prepare chromedriver
       uses: nanasess/setup-chromedriver@v2
 
-    - name: Install xvfb
-      run: sudo apt-get install xvfb
-    - name: Start xvfb
-      run: xvfb-run --server-args="-screen 0 1920x1080x24" python moxing/moxing.py      
-      
     - name: Run moxing script
       env:
          #moxing
@@ -47,4 +42,7 @@ jobs:
          # Telegram
         TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
         TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}
-      run: python moxing/moxing.py
+      run: sudo apt-get install xvfb
+           xvfb-run --server-args="-screen 0 1920x1080x24" python moxing/moxing.py   
+           python moxing/moxing.py
+           
