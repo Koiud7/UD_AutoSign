@@ -47,12 +47,12 @@ def send_to_telegram(messages):
         bot_token = os.environ["TELEGRAM_BOT_TOKEN"]
         chat_id = os.environ["TELEGRAM_CHAT_ID"]
         text = "\n—————————————————\n".join(messages)  # Join the messages with separator
-        formatted_message = f"🚀 <b><font color='purple'>ikuuu自动签到完成</font></b>\n\n<pre>{text}</pre>" 
+        formatted_message = f"*🚀 ikuuu自动签到完成*\n\n```\n{text}\n```"  # 使用Markdown格式
         url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
         data = {
             "chat_id": chat_id,
             "text": formatted_message,
-            "parse_mode": "HTML",
+            "parse_mode": "Markdown",
         }
         response = requests.post(url, json=data)
         if response.status_code == 200:
