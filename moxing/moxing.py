@@ -150,14 +150,14 @@ def send_to_telegram(msg):
     else:
         print("未配置 TELEGRAM_BOT_TOKEN 和 TELEGRAM_CHAT_ID")
 
-# def send_image_to_telegram(image_path):
-#     token = os.environ["TELEGRAM_BOT_TOKEN"]
-#     chat_id = os.environ["TELEGRAM_CHAT_ID"]
-#     url = f"https://api.telegram.org/bot{token}/sendPhoto"
-#     files = {'photo': open(image_path, 'rb')}
-#     data = {'chat_id': chat_id}
-#     response = requests.post(url, data=data, files=files)
-#     return response
+def send_image_to_telegram(image_path):
+    token = os.environ["TELEGRAM_BOT_TOKEN"]
+    chat_id = os.environ["TELEGRAM_CHAT_ID"]
+    url = f"https://api.telegram.org/bot{token}/sendPhoto"
+    files = {'photo': open(image_path, 'rb')}
+    data = {'chat_id': chat_id}
+    response = requests.post(url, data=data, files=files)
+    return response
 
 if __name__ == "__main__":
     username = os.environ["MOXING_USERNAME"]
