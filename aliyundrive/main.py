@@ -15,11 +15,8 @@ def main():
     message_all.append(str(result))
 
     title = '阿里云盘签到结果'
-    message_all = '\n'.join(message_all)
-    message_all = re.sub('\n+', '\n', message_all).rstrip('\n')
-
-    send_to_telegram(message_all)
-    print(message_all)
+    formatted_message = f'*🧸[阿里云盘] 签到完成*\n\n```\n{message_all}\n```"
+    send_to_telegram(formatted_message)
 
 
 def send_to_telegram(message_all):  # 接收 email 和 message 参数
@@ -29,7 +26,8 @@ def send_to_telegram(message_all):  # 接收 email 和 message 参数
         url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
         data = {
             "chat_id": chat_id,
-            "text": f" {message_all}",
+            "text": message_all,
+            "parse_mode": "Markdown",
         }
         response = requests.post(url, json=data)
         if response.status_code == 200:
