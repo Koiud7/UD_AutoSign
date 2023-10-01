@@ -173,9 +173,9 @@ if __name__ == "__main__":
         # 初始化WebDriver并设置窗口大小
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--no-sandbox')
-        # chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--headless')
         chrome_options.add_argument('--disable-dev-shm-usage')
-        chrome_options.add_argument("--start-maximized")  # 最大化窗口
+        # chrome_options.add_argument("--start-maximized")  # 最大化窗口
         driver = webdriver.Chrome(options=chrome_options)
 
         driver.get("https://moxing.love/member.php?mod=logging&action=login")
