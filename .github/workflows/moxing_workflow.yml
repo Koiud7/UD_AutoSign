@@ -1,4 +1,4 @@
-name: Run moxing
+name: moxing
 
 on:
   push:
@@ -43,7 +43,5 @@ jobs:
         TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
         TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}
       run: |
-        sudo cp -p ./chromedriver /usr/bin/
-        chmod -R 777 /usr/bin/chromedriver
-         python moxing/moxing.py
+        python moxing/moxing.py
            
