@@ -166,9 +166,11 @@ if __name__ == "__main__":
     attempts = 0  # 初始化计数器
     while attempts < max_attempts:
         # 初始化WebDriver并设置窗口大小
-        options = webdriver.ChromeOptions()
-        options.add_argument("--start-maximized")  # 最大化窗口
-        driver = webdriver.Chrome(options=options)
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument("--start-maximized")  # 最大化窗口
+        driver = webdriver.Chrome(options=chrome_options)
 
         driver.get("https://moxing.love/member.php?mod=logging&action=login")
         # 设置页面缩放级别为100%
