@@ -13,7 +13,7 @@ on:
     
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     environment: adrien
     steps:
     - name: Checkout code
@@ -31,17 +31,8 @@ jobs:
         pip install Pillow==9.5.0
         pip install selenium
 
-    - name: Install ChromeDriver
-      run: |
-        CHROME_VERSION=$(google-chrome --version | cut -f 3 -d ' ' | cut -d '.' -f 1) \
-          && CHROMEDRIVER_RELEASE=$(curl --location --fail --retry 3 https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5938.92/linux64/chromedriver-linux64.zip) \
-          && curl --silent --show-error --location --fail --retry 3 --output /tmp/chromedriver_linux64.zip "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5938.92/linux64/chromedriver-linux64.zip" \
-          && cd /tmp \
-          && unzip chromedriver_linux64.zip \
-          && rm -rf chromedriver_linux64.zip \
-          && sudo mv chromedriver /usr/local/bin/chromedriver \
-          && sudo chmod +x /usr/local/bin/chromedriver \
-          && chromedriver --version
+    - name: Prepare chromedriver
+      uses: nanasess/setup-chromedriver@v2
 
     - name: Run moxing script
       env:
@@ -52,5 +43,7 @@ jobs:
         TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
         TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}
       run: |
+        sudo cp -p ./chromedriver /usr/bin/
+        chmod -R 777 /usr/bin/chromedriver
         python moxing/moxing.py
            
