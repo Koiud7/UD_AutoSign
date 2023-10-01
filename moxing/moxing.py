@@ -161,6 +161,12 @@ def send_to_telegram(msg):  # 接收 email 和 message 参数
     else:
         print("未配置 TELEGRAM_BOT_TOKEN 和 TELEGRAM_CHAT_ID")
 
+def send_image_to_telegram(token, chat_id, image_path):
+    url = f"https://api.telegram.org/bot{token}/sendPhoto"
+    files = {'photo': open(image_path, 'rb')}
+    data = {'chat_id': chat_id}
+    response = requests.post(url, data=data, files=files)
+    return response
 
 if __name__ == "__main__":
     username = os.environ["MOXING_USERNAME"]
