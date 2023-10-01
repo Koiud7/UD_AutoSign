@@ -27,7 +27,12 @@ def get_captcha(driver):
 
     image = pic.crop((left, top, right, bottom))
     image.save('result.png')
-    
+
+     # 发送验证码图片到Telegram
+    telegram_token = os.environ["TELEGRAM_BOT_TOKEN"]
+    telegram_chat_id = os.environ["TELEGRAM_CHAT_ID"]
+    send_image_to_telegram(telegram_token, telegram_chat_id, 'result.png')
+    send_image_to_telegram(telegram_token, telegram_chat_id, 'pic.png')
     # 初始化 DDDDORC 实例
     ocr = ddddocr.DdddOcr()
 
