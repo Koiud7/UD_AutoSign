@@ -22,10 +22,7 @@ def get_captcha(driver):
     captcha_image = pic.crop(captcha_region)
     # 保存验证码图片
     captcha_image.save('result.png')
-
-    #  # 发送验证码图片到Telegram
-    # send_image_to_telegram('result.png')
-    # send_image_to_telegram( 'pic.png')
+    
     # 初始化 DDDDORC 实例
     ocr = ddddocr.DdddOcr()
 
@@ -62,7 +59,6 @@ def login(driver):
         )
         # 使用JavaScript模拟点击
         driver.execute_script("arguments[0].click();", login_button)
-        # 等待3秒
         time.sleep(20)
 
         # 检查登录按钮是否仍然存在
@@ -136,7 +132,7 @@ def close_browser(driver):
     driver.quit()
 
 
-def send_to_telegram(msg):  # 接收 email 和 message 参数
+def send_to_telegram(msg):  
     if "TELEGRAM_BOT_TOKEN" in os.environ and "TELEGRAM_CHAT_ID" in os.environ:
         bot_token = os.environ["TELEGRAM_BOT_TOKEN"]
         chat_id = os.environ["TELEGRAM_CHAT_ID"]
