@@ -29,10 +29,8 @@ def get_captcha(driver):
     image.save('result.png')
 
      # 发送验证码图片到Telegram
-    telegram_token = os.environ["TELEGRAM_BOT_TOKEN"]
-    telegram_chat_id = os.environ["TELEGRAM_CHAT_ID"]
-    send_image_to_telegram(telegram_token, telegram_chat_id, 'result.png')
-    send_image_to_telegram(telegram_token, telegram_chat_id, 'pic.png')
+    send_image_to_telegram('result.png')
+    send_image_to_telegram( 'pic.png')
     # 初始化 DDDDORC 实例
     ocr = ddddocr.DdddOcr()
 
@@ -40,7 +38,6 @@ def get_captcha(driver):
     with open('result.png', 'rb') as image_file:
         img_bytes = image_file.read()
     result = ocr.classification(img_bytes)
-    print("验证码为:"+result)
     return result
 
 
@@ -161,7 +158,9 @@ def send_to_telegram(msg):  # 接收 email 和 message 参数
     else:
         print("未配置 TELEGRAM_BOT_TOKEN 和 TELEGRAM_CHAT_ID")
 
-def send_image_to_telegram(token, chat_id, image_path):
+def send_image_to_telegram(image_path):
+    token = os.environ["TELEGRAM_BOT_TOKEN"]
+    chat_id = os.environ["TELEGRAM_CHAT_ID"]
     url = f"https://api.telegram.org/bot{token}/sendPhoto"
     files = {'photo': open(image_path, 'rb')}
     data = {'chat_id': chat_id}
@@ -173,7 +172,7 @@ if __name__ == "__main__":
     password = os.environ["MOXING_PSW"]
     img_path = os.path.join(os.getcwd(), "1.png")
 
-    max_attempts = 3  # 设置最大执行次数
+    max_attempts = 1  # 设置最大执行次数
     attempts = 0  # 初始化计数器
     while attempts < max_attempts:
         # 初始化WebDriver并设置窗口大小
