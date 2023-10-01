@@ -27,7 +27,7 @@ def send_to_telegram(message_all):  # 接收 email 和 message 参数
         bot_token = os.environ["TELEGRAM_BOT_TOKEN"]
         chat_id = os.environ["TELEGRAM_CHAT_ID"]
         url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
-        formatted_message = f"*🧸[阿里云盘] 签到完成*\n\n```\n{message_all}\n```"
+        formatted_message = f"*🧸 [阿里云盘] 签到完成*\n\n```\n{message_all}\n```"
         data = {
             "chat_id": chat_id,
             "text": formatted_message,
