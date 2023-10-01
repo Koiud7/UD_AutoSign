@@ -1,0 +1,45 @@
+name: Run moxing
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'moxing/*.py'
+  watch:
+    types: started
+  schedule:
+    - cron: 20 19 * * *
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: adrien
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+
+    - name: Install requests module
+      run: python -m pip install --upgrade requests
+
+    - name: Install ddddocr
+      run: python -m pip install ddddocr==1.4.8
+
+    - name: Install pillow
+      run: python -m pip install Pillow==9.5.0
+            
+
+    - name: Run moxing script
+      env:
+         #moxing
+        MOXING_USERNAME: ${{secrets.MOXING_USERNAME}}
+        MOXING_PSW: ${{secrets.MOXING_PSW}}
+         # Telegram
+        TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
+        TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}
+      run: python moxing/moxing.py
