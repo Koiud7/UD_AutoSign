@@ -1,4 +1,4 @@
-name: Run ikuuu
+name: Ikuuu Auto Sign
 
 on:
   push:
