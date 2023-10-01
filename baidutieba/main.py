@@ -177,7 +177,7 @@ def send_to_telegram(sign_list):
 
         length = len(sign_list)
         beijing_time:str = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time() + 28800))
-        title = "🥳百度贴吧自动签到完成" + '\n' + '\n' +"时间:  "+beijing_time + '\n' + "用户:  melolohappy"+ '\n'+"任务:  "+ str(length) + "个贴吧已签到" + '\n'
+        title = "🥳百度贴吧自动签到完成" + '\n' + '\n' +"时间:  "+beijing_time + '\n' +'——————————————————'+ '\n' + "用户:  melolohappy"+ '\n'+"任务:  "+ str(length) + "个贴吧已签到" + '\n'
 
         data = {
             "chat_id": chat_id,
