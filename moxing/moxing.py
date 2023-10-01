@@ -13,6 +13,7 @@ def save_img(src, img_path):
     with open(img_path, "wb") as f:
         f.write(img.content)
 
+
 def get_captcha(driver):
     # 截取验证码图片
     driver.save_screenshot('pic.png')
