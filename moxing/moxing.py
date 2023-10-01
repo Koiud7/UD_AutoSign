@@ -27,7 +27,7 @@ def get_captcha(driver):
 
     image = pic.crop((left, top, right, bottom))
     image.save('result.png')
-
+    
     # 初始化 DDDDORC 实例
     ocr = ddddocr.DdddOcr()
 
