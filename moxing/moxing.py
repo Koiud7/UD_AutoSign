@@ -8,6 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+
 def save_img(src, img_path):
     img = requests.get(src)
     with open(img_path, "wb") as f:
