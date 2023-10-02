@@ -21,7 +21,6 @@ def main():
     send_to_telegram(message_all)
     print(message_all)
 
-
 def send_to_telegram(message_all):  # 接收 email 和 message 参数
     if "TELEGRAM_BOT_TOKEN" in os.environ and "TELEGRAM_CHAT_ID" in os.environ:
         bot_token = os.environ["TELEGRAM_BOT_TOKEN"]
