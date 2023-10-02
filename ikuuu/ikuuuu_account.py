@@ -28,26 +28,27 @@ def sign_in(email, passwd):
             homepage_response = session.get('https://ikuuu.art/user')
             page_content = homepage_response.text
             tree = html.fromstring(page_content)
-            #当月剩余
+            # 当月剩余
             left_elements = tree.xpath('/html/body/div[1]/div/div[3]/section/div[3]/div[2]/div/div[2]/div[2]/span')
             for left_element in left_elements:
                 left = left_element.text_content().strip()
         
-            #今日已用
-            today_use_elements = tree.xpath('/html/body/div[1]/div/div[3]/section/div[3]/div[2]/div/div[2]/div[3]/div/nav/ol/li')
+            # 今日已用
+            today_use_elements = tree.xpath(
+                '/html/body/div[1]/div/div[3]/section/div[3]/div[2]/div/div[2]/div[3]/div/nav/ol/li')
             for today_use_element in today_use_elements:
                 today_use = today_use_element.text_content().strip()
                 today_use = re.sub(r'\s+', ' ', today_use)
         
-            #会员时长
+            # 会员时长
             member_elements = tree.xpath(
                 '/html/body/div[1]/div/div[3]/section/div[3]/div[1]/div/div[2]/div[2]/span')
             if member_elements:
-                member_elements=member_elements
+                member_elements = member_elements
                 for member_element in member_elements:
                     member = member_element.text_content().strip()
                     member = re.sub(r'\s+', ' ', member)
-                    member=f"{member}天"
+                    member = f"{member}天"
                 expires = tree.xpath(
                     '/html/body/div[1]/div/div[3]/section/div[3]/div[1]/div/div[3]/div/nav/ol/li')
                 expires = expires
@@ -56,13 +57,19 @@ def sign_in(email, passwd):
                     expire = re.sub(r'\s+', ' ', expire)
             else:
                 # 如果没有找到left_elements，使用备用的XPath表达式
-                expire="_"
+                backup_member = tree.xpath(
+                    '/html/body/div[1]/div/div[3]/section/div[3]/div[1]/div/div[2]/div[2]')
+                member_elements = backup_member
+                for member_element in member_elements:
+                    member = member_element.text_content().strip()
+                    member = re.sub(r'\s+', ' ', member)
+                expire ="免费版: 2099-12-30 过期"
         
             ss = session.post(f'https://ikuuu.art/user/checkin').json()
             if 'msg' in ss:
                 sr = ss['msg']
         
-            mes = f"{sr}\n{expire}\n会员剩余时长: {member}\n\n当月剩余流量: {left}GB\n{today_use}"
+            mes = f"{sr}\n\n{expire}\n会员剩余时长: {member}\n当月剩余流量: {left}GB\n{today_use}"
         return mes
     except Exception as e:
         return f'请检查帐号配置是否错误：{str(e)}'
