@@ -56,13 +56,7 @@ def sign_in(email, passwd):
                     expire = re.sub(r'\s+', ' ', expire)
             else:
                 # 如果没有找到left_elements，使用备用的XPath表达式
-                backup_member = tree.xpath(
-                    '/html/body/div[1]/div/div[3]/section/div[3]/div[1]/div/div[2]/div[2]')
-                member_elements = backup_member
-                for member_element in member_elements:
-                    member = member_element.text_content().strip()
-                    member = re.sub(r'\s+', ' ', member)
-                expire=""
+                expire=" "
         
             ss = session.post(f'https://ikuuu.art/user/checkin').json()
             if 'msg' in ss:
