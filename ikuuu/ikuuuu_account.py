@@ -105,6 +105,5 @@ def send_to_telegram(messages):
     else:
         print("未配置 TELEGRAM_BOT_TOKEN 和 TELEGRAM_CHAT_ID")
 
-
 if __name__ == '__main__':
     main()
