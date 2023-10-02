@@ -2,7 +2,7 @@ import sys
 import requests
 import os
 import re
-from bs4 import BeautifulSoup
+from lxml import html
 
 def main():
     r = 1
@@ -19,29 +19,56 @@ def main():
 
 def sign_in(email, passwd):
     try:
-        body = {"email": email, "passwd": passwd}
+        body = {"email": email, "passwd": password}
         headers = {
             'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
         with requests.Session() as session:
             session.post(f'https://ikuuu.art/auth/login', headers=headers, data=body)
+        
             homepage_response = session.get('https://ikuuu.art/user')
-            soup = BeautifulSoup(homepage_response.text, 'html.parser')
-            left_elements = soup.find_all('span', class_='counter')
-            left = left_elements[1].text
+            page_content = homepage_response.text
+            tree = html.fromstring(page_content)
+            #当月剩余
+            left_elements = tree.xpath('/html/body/div[1]/div/div[3]/section/div[3]/div[2]/div/div[2]/div[2]/span')
+            for left_element in left_elements:
+                left = left_element.text_content().strip()
         
-            li_elements = soup.select('li.breadcrumb-item.active')
+            #今日已用
+            today_use_elements = tree.xpath('/html/body/div[1]/div/div[3]/section/div[3]/div[2]/div/div[2]/div[3]/div/nav/ol/li')
+            for today_use_element in today_use_elements:
+                today_use = today_use_element.text_content().strip()
+                today_use = re.sub(r'\s+', ' ', today_use)
         
-            for li_element in li_elements:
-                element_text = li_element.text
-                cleaned_text = re.sub(r'\s+', ' ', element_text).strip()
-                if "今日已用" in cleaned_text:
-                    value = cleaned_text
+            #会员时长
+            member_elements = tree.xpath(
+                '/html/body/div[1]/div/div[3]/section/div[3]/div[1]/div/div[2]/div[2]/span')
+            if member_elements:
+                member_elements=member_elements
+                for member_element in member_elements:
+                    member = member_element.text_content().strip()
+                    member = re.sub(r'\s+', ' ', member)
+                    member=f"{member}天"
+                expires = tree.xpath(
+                    '/html/body/div[1]/div/div[3]/section/div[3]/div[1]/div/div[3]/div/nav/ol/li')
+                expires = expires
+                for expire in expires:
+                    expire = expire.text_content().strip()
+                    expire = re.sub(r'\s+', ' ', expire)
+            else:
+                # 如果没有找到left_elements，使用备用的XPath表达式
+                backup_member = tree.xpath(
+                    '/html/body/div[1]/div/div[3]/section/div[3]/div[1]/div/div[2]/div[2]')
+                member_elements = backup_member
+                for member_element in member_elements:
+                    member = member_element.text_content().strip()
+                    member = re.sub(r'\s+', ' ', member)
+                expire=""
         
             ss = session.post(f'https://ikuuu.art/user/checkin').json()
             if 'msg' in ss:
                 sr = ss['msg']
         
-            mes = f"{sr}\n当月剩余流量:{left}GB    {value}"
+            mes = f"{sr}\n会员剩余时长: {member}       {expire}\n当月剩余流量: {left}GB    {today_use}"
         return mes
     except Exception as e:
         return f'请检查帐号配置是否错误：{str(e)}'
