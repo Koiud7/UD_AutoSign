@@ -13,7 +13,7 @@ def main():
         email = i.split('&')[0]
         passwd = i.split('&')[1]
         result = sign_in(email, passwd)
-        messages.append(f"账户：{email}\n签到成功,{result}")  # Add the message to the list
+        messages.append(f"账户：{email}\n{result}")  # Add the message to the list
         r += 1
     send_to_telegram(messages)  # Pass the list of messages to send_to_telegram
 
