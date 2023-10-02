@@ -12,7 +12,7 @@ def main():
         email = i.split('&')[0]
         passwd = i.split('&')[1]
         result = sign_in(email, passwd)
-        messages.append(f"账户：{email}\n{result}")  # Add the message to the list
+        messages.append(f"账户：{email}\n签到成功,{result}")  # Add the message to the list
         r += 1
     send_to_telegram(messages)  # Pass the list of messages to send_to_telegram
 
@@ -22,9 +22,27 @@ def sign_in(email, passwd):
         headers = {'user-agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
         resp = requests.session()
         resp.post(f'https://ikuuu.art/auth/login', headers=headers, data=body)
+
+        homepage_response = session.get('https://ikuuu.art/user')
+        soup = BeautifulSoup(homepage_response.text, 'html.parser')
+        left = soup.find('span', class_='counter')
+  
+
+        li_elements = soup.select('li.breadcrumb-item.active')
+        
+        for li_element in li_elements:
+            element_text = li_element.text
+            cleaned_text = re.sub(r'\s+', ' ', element_text).strip()
+            if "今日已用" in cleaned_text:
+                value = cleaned_text
+        
         ss = resp.post(f'https://ikuuu.art/user/checkin').json()
         if 'msg' in ss:
-            return ss['msg']
+        mes=(f"{ss['msg']}\n当月剩余流量:{left}GB;{value})
+            
+            return mes
+        
+    
         else:
             return '未知错误'
     except Exception as e:
