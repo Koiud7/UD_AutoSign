@@ -18,33 +18,30 @@ def main():
 
 def sign_in(email, passwd):
     try:
-        body = {"email" : email,"passwd" : passwd,}
-        headers = {'user-agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
-        resp = requests.session()
-        resp.post(f'https://ikuuu.art/auth/login', headers=headers, data=body)
-
-        homepage_response = session.get('https://ikuuu.art/user')
-        soup = BeautifulSoup(homepage_response.text, 'html.parser')
-        left = soup.find('span', class_='counter')
-  
-
-        li_elements = soup.select('li.breadcrumb-item.active')
+        body = {"email": email, "passwd": password}
+        headers = {
+            'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+        with requests.Session() as session:
+            session.post(f'https://ikuuu.art/auth/login', headers=headers, data=body)
         
-        for li_element in li_elements:
-            element_text = li_element.text
-            cleaned_text = re.sub(r'\s+', ' ', element_text).strip()
-            if "今日已用" in cleaned_text:
-                value = cleaned_text
+            homepage_response = session.get('https://ikuuu.art/user')
+            soup = BeautifulSoup(homepage_response.text, 'html.parser')
+            left = soup.find('span', class_='counter').text
         
-        ss = resp.post(f'https://ikuuu.art/user/checkin').json()
-        if 'msg' in ss:
-            sr=ss['msg']
-        mes = f"{sr}\n当月剩余流量:{left}GB;{value}
-            return mes
+            li_elements = soup.select('li.breadcrumb-item.active')
         
-    
-        else:
-            return '未知错误'
+            for li_element in li_elements:
+                element_text = li_element.text
+                cleaned_text = re.sub(r'\s+', ' ', element_text).strip()
+                if "今日已用" in cleaned_text:
+                    value = cleaned_text
+        
+            ss = session.post(f'https://ikuuu.art/user/checkin').json()
+            if 'msg' in ss:
+                sr = ss['msg']
+        
+            mes = f"{sr}\n当月剩余流量:{left}GB    {value}"
+        return mes
     except Exception as e:
         return f'请检查帐号配置是否错误：{str(e)}'
 
