@@ -26,7 +26,8 @@ def sign_in(email, passwd):
             session.post(f'https://ikuuu.art/auth/login', headers=headers, data=body)
             homepage_response = session.get('https://ikuuu.art/user')
             soup = BeautifulSoup(homepage_response.text, 'html.parser')
-            left = soup.find('span', class_='counter').text
+            left_elements = soup.find_all('span', class_='counter')
+            left = left_elements[1].text
         
             li_elements = soup.select('li.breadcrumb-item.active')
         
