@@ -133,7 +133,6 @@ def sign_in(driver):
 def close_browser(driver):
     driver.quit()
 
-
 def send_to_telegram(msg):  
     if "TELEGRAM_BOT_TOKEN" in os.environ and "TELEGRAM_CHAT_ID" in os.environ:
         bot_token = os.environ["TELEGRAM_BOT_TOKEN"]
