@@ -1,9 +1,7 @@
 import os
 import re
 import requests
-
 from aliyundrive import Aliyundrive
-
 
 def main():
     token = os.environ["ALIYUNDRIVE_TOKEN"]
