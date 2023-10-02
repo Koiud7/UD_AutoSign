@@ -56,7 +56,7 @@ def sign_in(email, passwd):
                     expire = re.sub(r'\s+', ' ', expire)
             else:
                 # 如果没有找到left_elements，使用备用的XPath表达式
-                expire=" "
+                expire="_"
         
             ss = session.post(f'https://ikuuu.art/user/checkin').json()
             if 'msg' in ss:
