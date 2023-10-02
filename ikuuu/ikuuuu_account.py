@@ -38,8 +38,7 @@ def sign_in(email, passwd):
         
         ss = resp.post(f'https://ikuuu.art/user/checkin').json()
         if 'msg' in ss:
-        mes=(f"{ss['msg']}\n当月剩余流量:{left}GB;{value})
-            
+        mes=f"{ss['msg']}\n当月剩余流量:{left}GB;{value}
             return mes
         
     
