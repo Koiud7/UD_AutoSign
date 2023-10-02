@@ -68,7 +68,7 @@ def sign_in(email, passwd):
             if 'msg' in ss:
                 sr = ss['msg']
         
-            mes = f"{sr}\n会员剩余时长: {member}\n{expire}\n当月剩余流量: {left}GB\n{today_use}"
+            mes = f"{sr}\n{expire}\n会员剩余时长: {member}\n\n当月剩余流量: {left}GB\n{today_use}"
         return mes
     except Exception as e:
         return f'请检查帐号配置是否错误：{str(e)}'
