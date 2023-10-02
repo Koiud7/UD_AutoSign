@@ -3,7 +3,6 @@ import requests
 import os
 from bs4 import BeautifulSoup
 
-
 def main():
     r = 1
     oy = ql_env()
