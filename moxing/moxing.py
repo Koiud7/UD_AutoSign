@@ -193,7 +193,7 @@ if __name__ == "__main__":
             # 给telegram发消息：登录失败，正在重试
             close_browser(driver)
             attempts += 1  # 递增计数器
-            alarm1 = f"moxing登陆失败:验证码错误，已重试 {attempts} 次"
+            alarm1 = f"moxing登陆失败:已重试 {attempts} 次"
             send_to_telegram(alarm1)
             print(alarm1)
 
