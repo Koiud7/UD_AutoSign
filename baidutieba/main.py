@@ -46,7 +46,6 @@ KW = "kw"
 
 s = requests.Session()
 
-
 def get_tbs(bduss):
     logger.info("获取tbs开始")
     headers = copy.copy(HEADERS)
