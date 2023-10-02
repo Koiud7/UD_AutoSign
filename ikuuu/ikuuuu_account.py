@@ -23,7 +23,6 @@ def sign_in(email, passwd):
             'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
         with requests.Session() as session:
             session.post(f'https://ikuuu.art/auth/login', headers=headers, data=body)
-        
             homepage_response = session.get('https://ikuuu.art/user')
             soup = BeautifulSoup(homepage_response.text, 'html.parser')
             left = soup.find('span', class_='counter').text
