@@ -27,7 +27,7 @@ jobs:
     - name: Install requests and BeautifulSoup
       run: |
           pip install requests
-          pip install beautifulsoup4
+          pip install lxml
           
     - name: Run ikuuu script
       env:
