@@ -24,7 +24,7 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: Install requests module
+    - name: Install requests and BeautifulSoup
       run: |
           pip install requests
           pip install beautifulsoup4
