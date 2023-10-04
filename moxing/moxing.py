@@ -178,7 +178,7 @@ def send_image_to_telegram(image_path):
 if __name__ == "__main__":
     # username = os.environ["MOXING_USERNAME"]
     # password = os.environ["MOXING_PSW"]
-    username="adrien0901"
+    username="crpto999"
     password="Why0901@moxing"
     img_path = os.path.join(os.getcwd(), "1.png")
 
