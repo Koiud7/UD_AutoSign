@@ -100,7 +100,9 @@ def sign_in(driver):
             sign_flag = "今日已签"
         # 点击签到按钮或今日已签按钮
         sign_or_signed_element.click()
-
+        time.sleep(5)
+        # 强制刷新页面
+        driver.refresh()
         # 等待时间设置为15秒
         wait = WebDriverWait(driver, 15)
         # 在当前网页获取当日签到积分
@@ -136,10 +138,10 @@ def sign_in(driver):
     
     except Exception as e:
         # 处理异常情况，可以根据具体需求添加适当的处理逻辑
-        why=f"发生异常：{str(e)}"
+        why=f"签到发生异常：{str(e)}"
         print(why)
         sign_flag = "签到失败"
-        message =f"签到失败，{why}"
+        message =why
     
     # 如果没有发生异常，将返回相应信息
     print("sign_flag:"+sign_flag)
@@ -177,10 +179,8 @@ def send_image_to_telegram(image_path):
     return response
 
 if __name__ == "__main__":
-    # username = os.environ["MOXING_USERNAME"]
-    # password = os.environ["MOXING_PSW"]
-    username="joe998"
-    password="Why0901@moxing"
+    username = os.environ["MOXING_USERNAME"]
+    password = os.environ["MOXING_PSW"]
     img_path = os.path.join(os.getcwd(), "1.png")
 
     max_attempts = 5  # 设置最大执行次数
