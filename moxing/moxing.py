@@ -80,7 +80,7 @@ def login(driver):
 def sign_in(driver):
     # 等待页面加载完成
     global sign_flag, message
-        try:
+    try:
         WebDriverWait(driver, 15).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "a[href='/?is_agree=1']"))
         )
