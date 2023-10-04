@@ -80,26 +80,27 @@ def login(driver):
 def sign_in(driver):
     # 等待页面加载完成
     global sign_flag, message
-    try:
+        try:
         WebDriverWait(driver, 15).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "a[href='/?is_agree=1']"))
         )
         # 点击同意按钮
         driver.find_element(By.CSS_SELECTOR, "a[href='/?is_agree=1']").click()
-        # 检查是否存在点击签到的元素
-        sign_elements = driver.find_elements(By.XPATH, "//img[@alt='点击签到']")
-        if sign_elements:
-            sign = sign_elements[0]
-            sign.click()
+
+        # 再次等待签到按钮或今日已签按钮出现
+        sign_or_signed_element = WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.XPATH, "//img[@id='fx_checkin_b']"))
+        )
+
+        # 根据按钮的属性确定 sign_flag 的值
+        button_attribute = sign_or_signed_element.get_attribute("alt")
+        if button_attribute == "点击签到":
             sign_flag = "签到成功"
-        else:
-            # 如果点击签到元素不存在，检查今日已签到元素
-            today_signed_elements = driver.find_elements(By.XPATH, "//img[@alt='今日已签']")
-            if today_signed_elements:
-                sign = today_signed_elements[0]
-                sign.click()
-                sign_flag = "今日已签"
-        
+        elif button_attribute == "今日已签":
+            sign_flag = "今日已签"
+        # 点击签到按钮或今日已签按钮
+        sign_or_signed_element.click()
+
         # 等待时间设置为15秒
         wait = WebDriverWait(driver, 15)
         # 在当前网页获取当日签到积分
@@ -141,7 +142,7 @@ def sign_in(driver):
         message =f"签到失败，{why}"
     
     # 如果没有发生异常，将返回相应信息
-    print(sign_flag)
+    print("sign_flag:"+sign_flag)
     return sign_flag, message
 
 
@@ -206,7 +207,7 @@ if __name__ == "__main__":
                 close_browser(driver)
                 break
             elif sign_flag == "今日已签":
-                # send_to_telegram(message)  # 当签到成功时发送消息
+                send_to_telegram(message)  # 当签到成功时发送消息
                 close_browser(driver)
                 break
             else:
