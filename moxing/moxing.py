@@ -176,6 +176,8 @@ def send_image_to_telegram(image_path):
 if __name__ == "__main__":
     username = os.environ["MOXING_USERNAME"]
     password = os.environ["MOXING_PSW"]
+    username="crpto0901"
+    password="Why0901@moxing"
     img_path = os.path.join(os.getcwd(), "1.png")
 
     max_attempts = 5  # 设置最大执行次数
@@ -204,27 +206,29 @@ if __name__ == "__main__":
                 close_browser(driver)
                 break
             elif sign_flag == "今日已签":
-                # 可以选择发送自定义的消息或不发送任何内容
-                send_to_telegram(message)  # 当签到成功时发送消息
+                # send_to_telegram(message)  # 当签到成功时发送消息
                 close_browser(driver)
                 break
             else:
                 # 给telegram发消息：签到失败，正在重试
                 attempts += 1  # 递增计数器
                 alarm1 = f"moxing签到失败:已重试 {attempts} 次"
-                send_to_telegram(alarm1)
+                # send_to_telegram(alarm1)
                 print(alarm1)
-
+                close_browser(driver)
+                
                 if attempts >= max_attempts:
                     alarm2 = f"警告:moxing签到重试{max_attempts}次，不再重试"
                     send_to_telegram(alarm2)
                     print(alarm2)
                     break
+            
         else:
             # 给telegram发消息：登录失败，正在重试
             attempts += 1  # 递增计数器
             alarm1 = f"moxing登陆失败:已重试 {attempts} 次"
-            send_to_telegram(alarm1)
+            # send_to_telegram(alarm1)
+            close_browser(driver)
             print(alarm1)
 
             if attempts >= max_attempts:
