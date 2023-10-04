@@ -135,8 +135,10 @@ def sign_in(driver):
     
     except Exception as e:
         # 处理异常情况，可以根据具体需求添加适当的处理逻辑
-        print(f"发生异常：{str(e)}")
+        why=f"发生异常：{str(e)}"
+        print(why)
         sign_flag = "签到失败"
+        message =f"签到失败，{why}"
     
     # 如果没有发生异常，将返回相应信息
     print(sign_flag)
