@@ -139,6 +139,7 @@ def sign_in(driver):
         sign_flag = "签到失败"
     
     # 如果没有发生异常，将返回相应信息
+    print(sign_flag)
     return sign_flag, message
 
 
