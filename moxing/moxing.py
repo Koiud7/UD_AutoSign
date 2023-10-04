@@ -80,55 +80,67 @@ def login(driver):
 def sign_in(driver):
     # 等待页面加载完成
     global sign_flag, message
-    WebDriverWait(driver, 20).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, "a[href='/?is_agree=1']"))
-    )
-    # 点击同意按钮
-    driver.find_element(By.CSS_SELECTOR, "a[href='/?is_agree=1']").click()
-    # 检查是否存在点击签到的元素
-    sign_elements = driver.find_elements(By.XPATH, "//img[@alt='点击签到']")
-    if sign_elements:
-        sign = sign_elements[0]
-        sign.click()
-        sign_flag = "签到成功"
-    else:
-        # 如果点击签到元素不存在，检查今日已签到元素
-        today_signed_elements = driver.find_elements(By.XPATH, "//img[@alt='今日已签']")
-        if today_signed_elements:
-            sign = today_signed_elements[0]
+    try:
+        WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "a[href='/?is_agree=1']"))
+        )
+        # 点击同意按钮
+        driver.find_element(By.CSS_SELECTOR, "a[href='/?is_agree=1']").click()
+        # 检查是否存在点击签到的元素
+        sign_elements = driver.find_elements(By.XPATH, "//img[@alt='点击签到']")
+        if sign_elements:
+            sign = sign_elements[0]
             sign.click()
-            sign_flag = "今日已签"
-    wait = WebDriverWait(driver, 10)
-    # 在当前网页获取当日签到积分
-    rmb_element = wait.until(EC.presence_of_element_located((By.ID, "lxreward")))
-    rmb = rmb_element.get_attribute("value")
-    # 获取连续签到日期
-    lianxudays_element = wait.until(EC.presence_of_element_located((By.ID, "lxdays")))
-    lianxudays = lianxudays_element.get_attribute("value")
-    # 获取总软妹币
-    driver.get("https://moxing.love/home.php?mod=spacecp&ac=credit")
-    total_rmb_xpath = "/html/body/div/div[2]/div[1]/div/ul[2]/li[3]"
-    total_rmb_element = wait.until(EC.presence_of_element_located((By.XPATH, total_rmb_xpath)))
-    total_rmb = total_rmb_element.text
-    total_rmb = total_rmb.split("软妹币:")[1].strip()
-    # 获取头衔
-    driver.get("https://moxing.love/home.php?mod=spacecp&ac=usergroup")
-    touxian_xpath = "/html/body/div/div[2]/div[1]/div/div[1]/table[2]/tbody[3]/tr/th"
-    touxian_element = wait.until(EC.presence_of_element_located((By.XPATH, touxian_xpath)))
-    touxian = touxian_element.text
-    # 获取总积分
-    total_jifen_xpath = "/html/body/div/div[2]/div[1]/div/div[1]/table[2]/tbody[1]/tr[2]/th/span"
-    total_jifen_element = wait.until(EC.presence_of_element_located((By.XPATH, total_jifen_xpath)))
-    total_jifen = total_jifen_element.text
-    total_jifen = total_jifen.split("积分:")[1].strip()
-    # 获取升级还需要的积分
-    total_need_xpath = "/html/body/div/div[2]/div[1]/div/div[1]/div/table/tbody[1]/tr[1]/th/span"
-    total_need_element = wait.until(EC.presence_of_element_located((By.XPATH, total_need_xpath)))
-    total_need = total_need_element.text
-    total_need = total_need.split("您升级到此用户组还需积分")[1].strip()
+            sign_flag = "签到成功"
+        else:
+            # 如果点击签到元素不存在，检查今日已签到元素
+            today_signed_elements = driver.find_elements(By.XPATH, "//img[@alt='今日已签']")
+            if today_signed_elements:
+                sign = today_signed_elements[0]
+                sign.click()
+                sign_flag = "今日已签"
+        
+        # 等待时间设置为15秒
+        wait = WebDriverWait(driver, 15)
+        # 在当前网页获取当日签到积分
+        rmb_element = wait.until(EC.presence_of_element_located((By.ID, "lxreward")))
+        rmb = rmb_element.get_attribute("value")
+        # 获取连续签到日期
+        lianxudays_element = wait.until(EC.presence_of_element_located((By.ID, "lxdays")))
+        lianxudays = lianxudays_element.get_attribute("value")
+        # 获取总软妹币
+        driver.get("https://moxing.love/home.php?mod=spacecp&ac=credit")
+        total_rmb_xpath = "/html/body/div/div[2]/div[1]/div/ul[2]/li[3]"
+        total_rmb_element = wait.until(EC.presence_of_element_located((By.XPATH, total_rmb_xpath)))
+        total_rmb = total_rmb_element.text
+        total_rmb = total_rmb.split("软妹币:")[1].strip()
+        # 获取头衔
+        driver.get("https://moxing.love/home.php?mod=spacecp&ac=usergroup")
+        touxian_xpath = "/html/body/div/div[2]/div[1]/div/div[1]/table[2]/tbody[3]/tr/th"
+        touxian_element = wait.until(EC.presence_of_element_located((By.XPATH, touxian_xpath)))
+        touxian = touxian_element.text
+        # 获取总积分
+        total_jifen_xpath = "/html/body/div/div[2]/div[1]/div/div[1]/table[2]/tbody[1]/tr[2]/th/span"
+        total_jifen_element = wait.until(EC.presence_of_element_located((By.XPATH, total_jifen_xpath)))
+        total_jifen = total_jifen_element.text
+        total_jifen = total_jifen.split("积分:")[1].strip()
+        # 获取升级还需要的积分
+        total_need_xpath = "/html/body/div/div[2]/div[1]/div/div[1]/div/table/tbody[1]/tr[1]/th/span"
+        total_need_element = wait.until(EC.presence_of_element_located((By.XPATH, total_need_xpath)))
+        total_need = total_need_element.text
+        total_need = total_need.split("您升级到此用户组还需积分")[1].strip()
 
-    text = f"签到软妹币:  {rmb}\n软妹币总数:  {total_rmb}\n连续签到:    {lianxudays}天\n———————————————————————————\n当前头衔:  {touxian}\n总积分:  {total_jifen}\n升级剩余积分:  {total_need}"
-    message = f"*😈 [moxing论坛]  {sign_flag}*\n\n```\n{text}\n```"
+        text = f"签到软妹币:  {rmb}\n软妹币总数:  {total_rmb}\n连续签到:    {lianxudays}天\n———————————————————————————\n当前头衔:  {touxian}\n总积分:  {total_jifen}\n升级剩余积分:  {total_need}"
+        message = f"*😈 [moxing论坛]  {sign_flag}*\n\n```\n{text}\n```"
+    
+    except Exception as e:
+        # 处理异常情况，可以根据具体需求添加适当的处理逻辑
+        print(f"发生异常：{str(e)}")
+        sign_flag = "签到失败"
+    
+    # 如果没有发生异常，将返回相应信息
+    return sign_flag, message
+
 
 def close_browser(driver):
     driver.quit()
@@ -183,22 +195,39 @@ if __name__ == "__main__":
         login_success = login(driver)
 
         if login_success:
-            sign_in(driver)
-            time.sleep(5)
-            send_to_telegram(message)
-            print(message)
-            close_browser(driver)
-            break
+
+            sign_flag, message = sign_in(driver)  # 获取 sign_flag 和 message
+
+            if sign_flag == "签到成功":
+                send_to_telegram(message)  # 当签到成功时发送消息
+                close_browser(driver)
+                break
+            elif sign_flag == "今日已签":
+                # 可以选择发送自定义的消息或不发送任何内容
+                send_to_telegram(message)  # 当签到成功时发送消息
+                close_browser(driver)
+                break
+            else:
+                # 给telegram发消息：签到失败，正在重试
+                attempts += 1  # 递增计数器
+                alarm1 = f"moxing签到失败:已重试 {attempts} 次"
+                send_to_telegram(alarm1)
+                print(alarm1)
+
+                if attempts >= max_attempts:
+                    alarm2 = f"警告:moxing签到重试{max_attempts}次，不再重试"
+                    send_to_telegram(alarm2)
+                    print(alarm2)
+                    break
         else:
             # 给telegram发消息：登录失败，正在重试
-            close_browser(driver)
             attempts += 1  # 递增计数器
             alarm1 = f"moxing登陆失败:已重试 {attempts} 次"
             send_to_telegram(alarm1)
             print(alarm1)
 
-        if attempts >= max_attempts:
-            alarm2 = f"警告:达到最大重登次数{max_attempts}次，不再重试"
-            send_to_telegram(alarm2)
-            print(alarm2)
-            break
+            if attempts >= max_attempts:
+                alarm2 = f"警告:已重登moxing{max_attempts}次，不再重试"
+                send_to_telegram(alarm2)
+                print(alarm2)
+                break
