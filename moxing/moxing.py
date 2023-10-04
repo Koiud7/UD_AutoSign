@@ -46,7 +46,7 @@ def login(driver):
         driver.execute_script("arguments[0].click();", element)
         time.sleep(3)
         # 等待验证码图片加载完成
-        captcha_element = WebDriverWait(driver, 10).until(
+        captcha_element = WebDriverWait(driver, 15).until(
             EC.presence_of_element_located((By.NAME, "seccodeverify"))
         )
 
@@ -56,7 +56,7 @@ def login(driver):
         captcha_element.send_keys(captcha)
 
         # 登录按钮元素
-        login_button = WebDriverWait(driver, 10).until(
+        login_button = WebDriverWait(driver, 15).until(
             EC.presence_of_element_located((By.NAME, "loginsubmit"))
         )
         # 使用JavaScript模拟点击
@@ -174,9 +174,9 @@ def send_image_to_telegram(image_path):
     return response
 
 if __name__ == "__main__":
-    username = os.environ["MOXING_USERNAME"]
-    password = os.environ["MOXING_PSW"]
-    username="crpto0901"
+    # username = os.environ["MOXING_USERNAME"]
+    # password = os.environ["MOXING_PSW"]
+    username="adrien0901"
     password="Why0901@moxing"
     img_path = os.path.join(os.getcwd(), "1.png")
 
@@ -198,9 +198,7 @@ if __name__ == "__main__":
         login_success = login(driver)
 
         if login_success:
-
             sign_flag, message = sign_in(driver)  # 获取 sign_flag 和 message
-
             if sign_flag == "签到成功":
                 send_to_telegram(message)  # 当签到成功时发送消息
                 close_browser(driver)
