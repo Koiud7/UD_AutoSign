@@ -91,13 +91,17 @@ def sign_in(driver):
         sign_or_signed_element = WebDriverWait(driver, 15).until(
             EC.presence_of_element_located((By.XPATH, "//img[@id='fx_checkin_b']"))
         )
-
+        if sign_or_signed_element:
+            print("存在按钮元素")
+        else 
+            print("不存在按钮元素")
         # 根据按钮的属性确定 sign_flag 的值
         button_attribute = sign_or_signed_element.get_attribute("alt")
         if button_attribute == "点击签到":
             sign_flag = "签到成功"
         elif button_attribute == "今日已签":
             sign_flag = "今日已签"
+        print("点击按钮之前的sign_flag是:"+sign_flag)    
         # 点击签到按钮或今日已签按钮
         sign_or_signed_element.click()
         time.sleep(5)
