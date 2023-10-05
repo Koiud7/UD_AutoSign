@@ -107,6 +107,8 @@ def sign_in(driver):
         time.sleep(5)
         # 强制刷新页面
         driver.refresh()
+        sign_or_signed_element.click()
+        time.sleep(5)
         # 等待时间设置为15秒
         wait = WebDriverWait(driver, 15)
         # 在当前网页获取当日签到积分
