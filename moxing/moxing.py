@@ -104,11 +104,8 @@ def sign_in(driver):
         print("点击按钮之前的sign_flag是:"+sign_flag)    
         # 点击签到按钮或今日已签按钮
         sign_or_signed_element.click()
-        time.sleep(5)
-        # 强制刷新页面
-        driver.refresh()
-        sign_or_signed_element.click()
-        time.sleep(5)
+        time.sleep(2)
+        driver.get("https://moxing.love/plugin.php?id=k_misign:sign")
         # 等待时间设置为15秒
         wait = WebDriverWait(driver, 15)
         # 在当前网页获取当日签到积分
@@ -187,8 +184,8 @@ def send_image_to_telegram(image_path):
 if __name__ == "__main__":
     username = os.environ["MOXING_USERNAME"]
     password = os.environ["MOXING_PSW"]
-    username="adrien0901"
-    password="Why0901@moxing"
+    # username=""
+    # password=""
     img_path = os.path.join(os.getcwd(), "1.png")
 
     max_attempts = 5  # 设置最大执行次数
