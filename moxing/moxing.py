@@ -93,7 +93,7 @@ def sign_in(driver):
         )
         if sign_or_signed_element:
             print("存在按钮元素")
-        else 
+        else: 
             print("不存在按钮元素")
         # 根据按钮的属性确定 sign_flag 的值
         button_attribute = sign_or_signed_element.get_attribute("alt")
