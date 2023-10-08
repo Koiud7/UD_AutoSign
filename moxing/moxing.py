@@ -23,8 +23,8 @@ def get_captcha(driver):
     # 保存验证码图片
     captcha_image.save('result.png')
 
-    send_image_to_telegram('result.png')
-    send_image_to_telegram('pic.png')
+    # send_image_to_telegram('result.png')
+    # send_image_to_telegram('pic.png')
 
     
     # 初始化 DDDDORC 实例
