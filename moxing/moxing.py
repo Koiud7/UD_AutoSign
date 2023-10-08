@@ -17,7 +17,7 @@ def get_captcha(driver):
     driver.save_screenshot('pic.png')
     pic = Image.open('pic.png')
     # 确定验证码的位置和大小
-    captcha_region = (500, 660, 640, 710)  # 替换x、y、width、height为实际值
+    captcha_region = (500, 360, 640, 710)  # 替换x、y、width、height为实际值
     # 根据确定的位置和大小截取验证码
     captcha_image = pic.crop(captcha_region)
     # 保存验证码图片
@@ -188,7 +188,7 @@ if __name__ == "__main__":
     # password=""
     img_path = os.path.join(os.getcwd(), "1.png")
 
-    max_attempts = 5  # 设置最大执行次数
+    max_attempts = 1  # 设置最大执行次数
     attempts = 0  # 初始化计数器
     while attempts < max_attempts:
         # 初始化WebDriver并设置窗口大小
