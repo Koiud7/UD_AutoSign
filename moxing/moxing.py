@@ -18,7 +18,7 @@ def get_captcha(driver):
     pic = Image.open('pic.png')
     # 确定验证码的位置和大小
     # captcha_region = (500, 660, 640, 710)  # 替换x、y、width、height为实际值
-    captcha_region = (600, 460, 740, 610)  # 替换x、y、width、height为实际值
+    captcha_region = (550, 460, 690, 510)  # 替换x、y、width、height为实际值
     # 根据确定的位置和大小截取验证码
     captcha_image = pic.crop(captcha_region)
     # 保存验证码图片
