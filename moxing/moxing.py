@@ -18,7 +18,7 @@ def get_captcha(driver):
     pic = Image.open('pic.png')
     # 确定验证码的位置和大小
     # captcha_region = (500, 660, 640, 710)  # 替换x、y、width、height为实际值
-    captcha_region = (500, 600, 640, 710)  # 替换x、y、width、height为实际值
+    captcha_region = (550, 550, 640, 710)  # 替换x、y、width、height为实际值
     # 根据确定的位置和大小截取验证码
     captcha_image = pic.crop(captcha_region)
     # 保存验证码图片
@@ -198,12 +198,8 @@ if __name__ == "__main__":
         chrome_options.add_argument('--headless')
         # chrome_options.add_argument("--window-size=1200,960")
         chrome_options.add_argument('--disable-dev-shm-usage')
-        chrome_options.add_argument("--start-maximized")  # 最大化窗口
         driver = webdriver.Chrome(options=chrome_options)
-
         driver.get("https://moxing.love/member.php?mod=logging&action=login")
-        # # 设置页面缩放级别为100%
-        # driver.execute_script("document.body.style.zoom='100%'")
         login_success = login(driver)
 
         if login_success:
