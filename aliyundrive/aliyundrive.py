@@ -166,7 +166,7 @@ class Aliyundrive:
         
         award_notice = ''
         task_notice = ''
-
+        
         for reward in next(rewards)['rewards']:
             name = reward['name']
             remind = reward['remind']
