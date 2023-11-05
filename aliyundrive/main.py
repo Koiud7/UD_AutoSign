@@ -5,7 +5,6 @@ from aliyundrive import Aliyundrive
 
 def main():
     token = os.environ["ALIYUNDRIVE_TOKEN"]
-    
     ali = Aliyundrive()
     message_all = []
 
