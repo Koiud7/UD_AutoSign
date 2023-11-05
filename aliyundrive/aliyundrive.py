@@ -11,7 +11,7 @@ class Aliyundrive:
     :param token: 阿里云盘token
     :return AliyundriveInfo: 
     """
-
+    
     def aliyundrive_check_in(self, token: str) -> AliyundriveInfo:
         info = AliyundriveInfo(
             success=False,
