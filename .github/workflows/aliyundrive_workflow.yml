@@ -14,7 +14,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: adrien
+    environment: UD
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
